@@ -1,1 +1,9 @@
 git test
+/*命令行*/
+shutdown -s
+shutdown -s -f -t 7200   /*指定时间内关机*/
+shutdown -s -f 7200 -c   /*指定时间内重启*/
+
+net use \\ip/user.clamp  /*远程登陆*/
+input passwd
+shutdown -s -m \\ip     /*远程关闭*/
