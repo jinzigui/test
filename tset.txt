@@ -11,15 +11,34 @@ dir e:\git /o-s      /*查看某文件夹下的文件并从小到大排列*/
 copy test.txt d:\hacker\      /*复制文件*/
 tasklist /s ip /u clamp /p passwd  /*远程查看进程*/
 taskist                            /*查看本地进程*/
-taskkill /pid PID               /*两种关闭进程方式*/
+taskkill /pid PID   (-f)          /*两种关闭进程方式，(-f)强行关闭程序*/
 taskkill /im 进程名
 
+
+ 我的电脑--〉管理--〉服务和应用程序--〉服务--〉telnet    /*先开启23端口*/
 telnet 
 o ip                   /*远程登陆电脑*/
 
 telnet 用户名 端口    /*远程连接对方电脑*/
 
 net use  \\ip\ipc$   /*建立远程空接*/
+
+dri d:       /*查看d盘下所有的文件*/
+dri d:\MyDrivers /o-s     /*查看d盘MyDrivers文件夹下所有的目录和文件
+dri d:\MyDrivers /a       /*查看d盘MyDrivers文件夹里所有的文件*/
+type test.txt |more       /*查看txt格式的文件内的内容*/
+attrib                    /*查看该文件夹下所有文件的格式*/
+dir>jinzigui.txt                     /*在命令行下创建文件*/
+echo lijiang>jinzigui.txt            /*将内容写到文件中去*/
+echo shi->da->sha->bi>>jinzigui.txt   /*将内容写换行写到文件中去*/
+cd .>jinzigui.txt                     /*清空文件中的内容*/
+del jinzigui.txt                     /*删除文件*/
+attrib +h                          /*隐藏文件*/
+attrib -h                          /*取消隐藏*/
+attrib +h e:\lijiang.txt          /*对指定的文件设置隐藏*/
+ren 原文件名 新文件名              /*对文件改名*/
+
+tree /f                   /*树形列表*/
 
 netstat -a           /*显示所有活动连接和侦听端口*/
 netstat -b           /*显示当前活动连接和侦听端口*/
@@ -28,4 +47,23 @@ net stop sharedAccess     /*停止防火墙*/
 
 net view \\ip /CACHE      /*查看远端电脑共享的文件夹*/
 
+
+/*关机命令*/
+  没有参数                显示此消息(与 ? 相同)
+  -i                      显示 GUI 界面，必须是第一个选项
+  -l                      注销(不能与选项 -m 一起使用)
+  -s                      关闭此计算机
+  -r                      关闭并重启动此计算机
+  -a                      放弃系统关机
+  -m \\computername       远程计算机关机/重启动/放弃
+  -t xx                   设置关闭的超时为 xx 秒
+  -c "comment"            关闭注释(最大 127 个字符)
+  -f                      强制运行的应用程序关闭而没有警告
+  -d [u][p]:xx:yy         关闭原因代码
+                          u 是用户代码
+                          p 是一个计划的关闭代码
+                          xx 是一个主要原因代码(小于 256 的正整数)
+                          yy 是一个次要原因代码(小于 65536 的正整数)
+
+mstsc /v:ip      /*开启远程桌面，我的电脑——〉属性——>系统设置——〉远程*/
 
