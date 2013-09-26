@@ -11,5 +11,21 @@ dir e:\git /o-s      /*查看某文件夹下的文件并从小到大排列*/
 copy test.txt d:\hacker\      /*复制文件*/
 tasklist /s ip /u clamp /p passwd  /*远程查看进程*/
 taskist                            /*查看本地进程*/
-taskkill /pid PID 
+taskkill /pid PID               /*两种关闭进程方式*/
 taskkill /im 进程名
+
+telnet 
+o ip                   /*远程登陆电脑*/
+
+telnet 用户名 端口    /*远程连接对方电脑*/
+
+net use  \\ip\ipc$   /*建立远程空接*/
+
+netstat -a           /*显示所有活动连接和侦听端口*/
+netstat -b           /*显示当前活动连接和侦听端口*/
+
+net stop sharedAccess     /*停止防火墙*/
+
+net view \\ip /CACHE      /*查看远端电脑共享的文件夹*/
+
+
