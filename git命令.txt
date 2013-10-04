@@ -1,0 +1,66 @@
+1、在最后提交中更改Export
+git archive -o ../updated.zip HEAD $(git diff --name-only HEAD^)
+
+2、在两次提交之间更改Export文件
+同样地，如果你需要在两次提交之间更改文件，可以选择以下这段代码。
+git archive -o ../latest.zip NEW_COMMIT_ID_HERE $(git diff --name-only OLD_COMMIT_ID_HERE NEW_COMMIT_ID_HERE)
+
+3. 克隆一个特定的远程分支（Clone a specific remote branch）
+如果你想从远程资源库中克隆一个特定的分支，而无需克隆整个资源库分支，那么下面的这段代码将对你有用。	
+git init 
+git remote add -t BRANCH_NAME_HERE -f origin REMOTE_REPO_URL_PATH_HERE 
+git checkout BRANCH_NAME_HERE
+
+
+4.  从不相关的本地资源库中应用补丁（Apply patch from Unrelated local repository）
+这里有个快捷方式可帮助你实现。	
+view plaincopy to clipboardprint?
+git --git-dir=PATH_TO_OTHER_REPOSITORY_HERE/.git format-patch -k -1 --stdout COMMIT_HASH_ID_HERE| git am -3 -k
+
+
+ 5、 检查分支是否在其它分支中遭到更改（Check if your Branch changes are part of Other branch）
+
+cherry这个命令，能够检查你的分支在其他分支中是否被更改。它会在当前的分支上显示变化，并注明+或-标识符。+代表不存在，-表示在现有的分支中存在。
+	
+view plaincopy to clipboardprint?
+git cherry -v OTHER_BRANCH_NAME_HERE 
+#For example: to check with master branch 
+git cherry -v master  <br>
+
+
+6. 启动一个无历史记录的新分支（ Start a new Branch with No History）
+
+有时，你想启动一个新的分支，但并不想运行漫长的历史记录，例如，你想将代码放置在一个公共的域中（开源），但又不想共享历史。	
+
+git checkout --orphan NEW_BRANCH_NAME_HERE
+
+7. 从其他分支签出文件但无需切换分支（ Checkout File from Other Branch without Switching Branches ）
+
+这里将教你如何获取想要的文件。
+	
+git checkout BRANCH_NAME_HERE -- PATH_TO_FILE_IN_BRANCH_HERE
+
+8. 忽略追踪文件中的更改（ Ignore Changes in a Tracked File ）
+
+如果你是在某个团队中工作，他们都在使用同一个分支，也许你会频繁使用提取/合并（fetch/merge），但这有时需要重置特定的配置文件，这就意味着在每次合并后你必须去做更改。现在，使用这个命令，你可以要求Git忽略更改特定文件。
+
+git update-index --assume-unchanged PATH_TO_FILE_HERE
+
+9. 检查已提交部分是否在发布的版本中遭到更改（Check if committed changes are part of a release）
+
+name-rev这个命令可以告诉你已提交到最新版本的某个位置。使用这个代码可帮助你检查，提交的部分是否在已发布版本中遭到更改。
+	
+git name-rev --name-only COMMIT_HASH_HERE
+
+10. 用复位替代合并（Pull with rebase instead of merge ）
+
+当某项特性分支被合并到主流中，此时该分支合并会在Git中以合并提交来进行记录。但是当团队中多个成员在同一个分支上工作时，常规的合并会导致多个合并消息在日志中呈现混乱状态。因此，你可以使用复位（rebase）来保持历史清晰，清除无用的合并消息。
+
+git pull --rebase
+此外，你还可以通过配置一个特定的分支来复位。
+
+git config branch.BRANCH_NAME_HERE.rebase true
+
+
+
+
