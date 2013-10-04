@@ -1,0 +1,263 @@
+在windows上安装最新版的git
+http://code.google.com/p/msysgit
+
+
+设置用户信息
+git config  --global user.name "name"
+git config --global user.email 8710737672qq.com
+
+
+查看用户信息
+git config --list
+
+
+取得项目的Git仓库
+1、从当前目录初始化
+git init 
+
+2、从现有仓库克隆
+git clone https://bitbucket.org/goteet/game.git
+可以改变克隆项目目录的名称
+git clone https://bitbucket.org/goteet/game.git mytest
+
+跟踪新文件
+git add 
+git add *.cpp
+第二个命令将工作目录下后缀名为.cpp的文件一次暂存起来
+每次修改过了的文件都用git add添加到暂存区中，不然暂存区中的文件时没有修改过的
+
+忽略某些文件
+创建一个名为.gitignore的文件，在该文件中列出所要忽略的文件
+cat .gitignore
+该命令会列出你所忽略的文件，目录或是某种格式的文件
+比如：
+readme.txt
+*.a             //忽略所有.a结尾的文件
+!lib.a         //但除了这个
+Debug/     //忽略这个文件夹下的所有文件    
+
+查看已暂存和未暂存的更新
+git diff
+该命令可以以文件补丁的形式列出哪些文件添加了哪行或删了哪行，是比较工作目录中当前文件和暂存区域快照之间的差异，也就是修改了文件和没修改文件之间的差异
+git diff --cached
+该命令可以查看这次快照和上次提交快照之间的差异，要提交到暂存库中才能看到该差异
+
+
+提交更新
+git commit 
+该命令仅仅是提交了，没有任何附加消息
+git commit -m "8.23git test"
+该消息可以将附加消息一起提交，方便下次查看
+
+跳过使用暂存区域
+git commit -a -m "8.23 git test"
+该命令会自动把所有已经跟踪过的文件暂存起来一并提交，还有附加的消息
+如果有新建的文件想要提交的话先要add再提交
+
+移除文件
+rm gittest.txt
+该命令是将暂存区中移除也在工作目录中将该文件删除了，最后提交的时候，该文件就不再纳入版本管理了。如果删除之前修改过并且已经放到暂存区域的话，则必须要强制删除选项-f,以防误删文件后丢失修改的内容。
+git rm --cached addgittest.txt
+该命令是将暂存区域或是已纳入版本管理中的文件不再被继续跟踪，但不会在目录中将该文件删除
+git rm lob/\*.log
+该命令是删除log/目录下所有扩展名为.log的文件
+git rm \*~
+该命令会递归删除当前目录及其目录中所有~结尾的文件
+
+对文件改名
+git mv addgittest.txt .gitignore
+该命令是将文件addgittest.txt改名为.gitignore,z这个命令可以创建最开始我们所需要的.gitignore文件
+
+查看提交历史
+git log 
+该命令可以查看提交的历史或是查看克隆了某个项目
+git log -p -2
+该命令是显示最近这两次的更新，可以快速浏览其他协作者提交的更新做了哪些改动
+git log --pretty=online  该命令只显示提交是的附加信息
+git log --pretty=short    
+git log --pretty=full
+git --pretty=fuller
+后面这三个命令挺好用的
+git log --preety=format:"%h - %an, %ar : %s"
+最好玩是这个命令，可以显示第一次提交距离到现在的时间间隔
+选项说明
+%H 提交对象（commit）的完整哈希字串
+%h 提交对象的简短哈希字串
+%T 树对象（tree）的完整哈希字串
+%t 树对象的简短哈希字串
+%P 父对象（parent）的完整哈希字串
+%p 父对象的简短哈希字串
+%an 作者（author）的名字
+%ae 作者的电子邮件地址
+%ad 作者修订日期（可以用-date= 选项定制格式）
+%ar 作者修订日期，按多久以前的方式显示
+%cn 提交者(committer)的名字
+%ce 提交者的电子邮件地址
+%cd 提交日期
+%cr 提交日期，按多久以前的方式显示
+%s 提交说明
+git log 其他的一些用法
+选项说明
+-p 按补丁格式显示每个更新之间的差异。
+--stat 显示每次更新的文件修改统计信息。
+--shortstat 只显示--stat 中最后的行数修改添加移除统计。
+--name-only 仅在提交信息后显示已修改的文件清单。
+--name-status 显示新增、修改、删除的文件清单。
+--abbrev-commit 仅显示SHA-1 的前几个字符，而非所有的40 个字符。
+--relative-date 使用较短的相对时间显示（比如，“2 weeks ago”）。
+--graph 显示ASCII 图形表示的分支合并历史。
+--pretty 使用其他格式显示历史提交信息。可用的选项包括oneline，short，full，fuller 和format（后跟指
+定格式）。
+
+使用图像化工具查阅提交历史
+gitk
+该命令调出来的窗口，上半个窗口显示的是历次提交的分支祖先图谱，下半个窗口显示当前点选的提交对应的具体差异
+
+
+撤销操作
+
+修改最后一次提交
+git commit --amend
+如果刚才提交没有改动可以运行此命令重新提交说明，它会覆盖刚才失误的提交
+我用这命令的时候出现了错误：
+If no other git process is currently running, this probably means a
+git process crashed in this repository earlier. Make sure no other git
+process is running and remove the file manually to continue.
+不能提交不能add文件
+解决方法为：
+rm -f ./.git/index.lock
+由于使用git commit --amend命令时会调出VIM这个编辑器（一个让人崩溃的编译器），一个命令都不懂用，上网查了一下才略懂，先按esc键退出命令模式，然后编辑修改错误的信息或内容，再按esc键进入编辑模式，输入:wq回车，保存并退出
+git commit -m 'initial commit'
+git add forgoten_file
+git commit --amend
+该三行命令是如果提交时忘了暂存某些修改，可以先补上暂存操作，然后再运行--amend提交
+
+取消已经暂存的文件
+git reset HEAD cancel.txt
+
+取消对文件的修改
+git checkout -- cancel.txt
+该命令会将你已经跟踪了的文件做了修该但是还没更新暂存时你之前所做的修改全部清除，必须是对已经add了的文件才有用。
+int sure.txt add write git is really interseting 
+git reset HEAD sure.txt
+git add sure.txt
+git checkout -- sure.txt
+int the surn.txt what i write is still exist,the order it doesn't work
+git 里面任何已经提交到Git的都可以被恢复，除了没有提交过的文件，因为对git来说它们就像没有存在过一样。
+
+
+查看当前的远程库
+git remote
+该命令是查看当前配置有哪些远程仓库
+
+添加远程仓库
+git remote add  origin ssh://lijiang@182.91.228.109/~8.23gittest/.git
+这个命令我还是不太懂，不是不太懂，是真的不懂
+
+找了很多信息找到个网址
+https://github.com/peterluo/LearningPythonDiary/blob/master/1.How%20to%20use%20git.md
+
+
+推送数据到远程仓库
+git push  origin master
+
+查看远程仓库信息
+git remote show origin 
+
+远程仓库的删除和重命名
+git remote rename origin jinzigui
+git remote rm jinzigui
+https://github.com/jinzigui/addgittest.git
+
+
+分支
+创建分支
+gitz branch 8.25gittest
+该命令会在最后一次提交的的仓库中建立一条分支
+
+切换分支
+git checkout 8.25gittest
+切换到了该分支上所做的修改并提交后该分支就指向了这次提交的地址
+
+新建并切换到另一条分支上
+git checkout -b 8.25gittest
+
+合并分支
+git checkout  -b test
+git checkout master
+git merge test
+git branch -d test
+创建并切换到该分支上进行一些必要的修改
+修改测试后切回master上再合并
+合并后删除掉该新建的分支
+
+冲突的合并
+git mergetool
+有图形的解决合并冲突
+
+查看所有的分支
+git branch
+该命令是查看你的仓库中有多少分支
+
+git branch -v
+该命令是查看各分支最后的一次的提交
+
+查看已合并的分支和未合并的分支
+git branch --merged
+git branch --no-merged
+
+推送
+要想好其他人分享某个人，需要把它推送到一个你拥有写权限的远程仓库
+有个test的分支想要和别人分享就可以用下面这命令
+git push gittest(仓库名，必须要已经建立了远程仓库) test(分支名)
+
+保持仓库的自动更新
+git fetch gittest
+用该命令抓取到了远程分支后却无法编辑该远程仓库，所以可以在该远程分支的基础上分化出一个新的分支来
+git checkout -b test(本地)  gittest/test
+
+跟踪分支
+从远程分支检出来的本地分支，称为跟踪分支。跟踪分支是一种和远程分支有直接联系的本地分支。
+在跟踪分支里面输入git push,git会自行推断应该向 哪个服务器的哪个分支推送数据。
+git pull 在分支里则会获取所有远程索引，并把它们的数据都合并到本地分支来
+
+删除远程分支
+git push [远程名]:[分支名]
+git push gittest :test
+
+
+衍合
+git checkout 8.25gitbranchB
+git rebase mster
+该命令是将8.25gitbranchB中提交的改变在master中重放一遍
+我测试了，可是不成功。。。都不知怎么搞的
+自己搞错了，要先衍合后
+git checkout master
+git merge 8.25gitbranchB
+进行合并才可以看到8.25gitbranchB中提交的改变在master中重放一遍
+
+master->b_test1->b_test2
+git rebase --onto master b_test1 b_test2
+git checkout master
+git merge b_test2 
+该命令可以将b_test2分支上的快照合并到master上
+
+衍合：
+记住：永远不要把衍合那些已经推送到公共仓库的更新！
+
+https://github.com/jinzigui/addgittest.git
+
+
+
+生成SSH公钥
+cd ~/.ssh
+ls
+
+建立公钥
+ssh-keygen
+
+查看公钥
+cat ~/.ssh/id_rsa.pub
+
+架设服务器
+sudo adduser git
